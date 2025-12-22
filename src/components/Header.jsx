@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-function Heder({ cart }) {
+function Heder({ cart, removeFromCart, addFromCart }) {
   const isEmmpty = useMemo( () => cart.length === 0, [cart]);
   const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart]);
 
@@ -56,12 +56,18 @@ function Heder({ cart }) {
                                 -
                               </button>
                                 {guitar.quantity}
-                              <button type="button" className="btn btn-dark">
+                              <button
+                                type="button"
+                                className="btn btn-dark"
+                                onClick={() => addFromCart(guitar.id)}>
                                 +
                               </button>
                             </td>
                             <td>
-                              <button className="btn btn-danger" type="button">
+                              <button
+                                className="btn btn-danger"
+                                type="button"
+                                onClick={() => removeFromCart(guitar.id)}>
                                 X
                               </button>
                             </td>
