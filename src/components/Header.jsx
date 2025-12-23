@@ -1,7 +1,5 @@
-import { useMemo } from "react";
-function Heder({ cart, removeFromCart, increseFromCart, decreaseFromCart, clearCart }) {
-  const isEmmpty = useMemo( () => cart.length === 0, [cart]);
-  const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart]);
+
+function Heder({ cart, removeFromCart, increseFromCart, decreaseFromCart, clearCart, isEmmpty, cartTotal }) {
 
     return (
       <header className="py-5 header">

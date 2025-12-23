@@ -1,72 +1,20 @@
-import { useEffect, useState } from "react";
 import Guitar from "./components/Guitar";
 import Heder from "./components/Header";
-import { db } from "./data/db";
+import useCart from "./hooks/useCart";
 function App() {
+  const {
+    data,
+    cart,
+    addToCart,
+    removeFromCart,
+    decreaseFromCart,
+    increseFromCart,
+    clearCart,
+    isEmmpty,
+    cartTotal,
+  } = useCart();
 
-  const initialCart = () => {
-    const localStorageCart = localStorage.getItem("cart");
-    return localStorageCart ? JSON.parse(localStorageCart) : [];
-  }
-
-  const [data] = useState(db);
-  const [cart, setCart] = useState(initialCart);
-
-  const MIN_ITEMS = 1;
-  const MAX_ITEMS = 5;
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  function addToCart(item) {
-    const itemExist = cart.findIndex((guitar) => guitar.id === item.id);
-    if (itemExist >= 0) {
-      if(cart[itemExist].quantity >= MAX_ITEMS) return;
-      const updatedCart = [...cart];
-      updatedCart[itemExist].quantity++;
-      setCart(updatedCart);
-    } else {
-      item.quantity = 1;
-      setCart([...cart, item]);
-    }
-  }
-
-  function removeFromCart(id) {
-    setCart(prevCart => prevCart.filter(guitar => guitar.id !== id));
-  }
-
-  function decreaseFromCart(id) {
-    const updatedCart = cart.map(item => {
-      if (item.id === id && item.quantity > MIN_ITEMS) {
-        return {
-          ...item,
-          quantity: item.quantity - 1
-        };
-      }
-      return item;
-    })
-    setCart(updatedCart);
-  }
-
-  function increseFromCart(id) {
-    const updatedCart = cart.map(item => {
-      if (item.id === id && item.quantity < MAX_ITEMS) {
-        return {
-          ...item,
-          quantity: item.quantity + 1
-        };
-      }
-      return item;
-    })
-    setCart(updatedCart);
-  }
-
-  function clearCart() {
-    setCart([]);
-  }
-
-
+  
   return (
     <>
       <Heder
@@ -75,6 +23,8 @@ function App() {
         increseFromCart={increseFromCart}
         decreaseFromCart={decreaseFromCart}
         clearCart={clearCart}
+        isEmmpty={isEmmpty}
+        cartTotal={cartTotal}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
