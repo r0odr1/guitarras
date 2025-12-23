@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Guitar from "./components/Guitar";
 import Heder from "./components/Header";
 import { db } from "./data/db";
@@ -9,7 +9,7 @@ function App() {
     return localStorageCart ? JSON.parse(localStorageCart) : [];
   }
 
-  const [data, setData] = useState(db);
+  const [data] = useState(db);
   const [cart, setCart] = useState(initialCart);
 
   const MIN_ITEMS = 1;
